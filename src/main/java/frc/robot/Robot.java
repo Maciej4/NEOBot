@@ -1,17 +1,11 @@
 package frc.robot;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 public class Robot extends TimedRobot {
+  Drivetrain drivetrain = new Drivetrain();
   public Joystick joy = new Joystick(0);
-  public CANSparkMax motor1 = new CANSparkMax(1, MotorType.kBrushless);
-  public CANSparkMax motor2 = new CANSparkMax(2, MotorType.kBrushless);
-  public CANSparkMax motor3 = new CANSparkMax(3, MotorType.kBrushless);
-  public CANSparkMax motor4 = new CANSparkMax(4, MotorType.kBrushless);
   //public PID leftPID = new PID(0.03,0,0.001);
   //public PID rightPID = new PID(0.03,0,0.001);
   public double stepSizeMaster = 0.05;
@@ -35,7 +29,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    
+    drivetrain.resetEncoders();
   }
 
   public double handleDeadband(double input, double limit) {
@@ -61,10 +55,8 @@ public class Robot extends TimedRobot {
     //System.out.println("-----------");
     //System.out.println("LeftGoal: " + leftGoal + " LeftVel:" + leftActual + " LeftPower" + leftPower);
     //System.out.println("RightGoal: " + leftGoal + "RightVel:" + rightActual + " RightPower" + rightPower);
+    drivetrain.tankDrive(leftPower, rightPower);
 
-    motor1.set(leftPower);
-    motor2.set(leftPower);
-    motor3.set(rightPower);
-    motor4.set(rightPower);
+    System.out.println("Left Pos: " + drivetrain.getLeftDist() + "; Right Pos: " + drivetrain.getRightDist());
   }
 }
