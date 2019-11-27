@@ -11,6 +11,7 @@ public class Robot extends TimedRobot {
   public double stepSizeMaster = 0.05;
   public LinearAccelerator leftLinAccel = new LinearAccelerator(stepSizeMaster);
   public LinearAccelerator rightLinAccel = new LinearAccelerator(stepSizeMaster);
+  public RoadRunnerSandbox game = new RoadRunnerSandbox();
 
   @Override
   public void robotInit() {
