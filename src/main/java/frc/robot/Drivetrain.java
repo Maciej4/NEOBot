@@ -17,8 +17,8 @@ public class Drivetrain
 
     public CANSparkMax motor3;
     public CANSparkMax motor4;
-    public PID leftDrivePID = new PID(0.0005, 0, 0);
-    public PID rightDrivePID = new PID(0.0005, 0, 0);
+    public PID leftDrivePID = new PID(0.005, 0, 0);
+    public PID rightDrivePID = new PID(0.005, 0, 0);
     
     public Drivetrain ()
     {

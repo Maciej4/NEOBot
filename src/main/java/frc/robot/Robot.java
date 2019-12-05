@@ -63,16 +63,7 @@ public class Robot extends TimedRobot {
     //System.out.println("-----------");
     //System.out.println("LeftGoal: " + leftGoal + " LeftVel:" + leftActual + " LeftPower" + leftPower);
     //System.out.println("RightGoal: " + leftGoal + "RightVel:" + rightActual + " RightPower" + rightPower);
-<<<<<<< Updated upstream
     drivetrain.tankDrivePID(100*leftGoal, 100*rightGoal);
-=======
-<<<<<<< HEAD
-    drivetrain.tankDrivePID(100*leftGoal, 100*rightGoal);
-=======
-
-    drivetrain.tankDrive(leftPower, rightPower);
->>>>>>> ce044d529c86daccf8cc555282ec5ecc5952eb8b
->>>>>>> Stashed changes
 
     //System.out.println("Left Pos: " + drivetrain.getLeftDist() + "; Right Pos: " + drivetrain.getRightDist());
   }
