@@ -10,15 +10,14 @@ public class Drivetrain
     public double startPosLeft = 0;
     public double startPosRight = 0;
     public double pastLeftDist = 0;
-    public long pastTime;
     public double pastRightDist = 0;
+    public long pastTime;
     public CANSparkMax motor1;
     public CANSparkMax motor2;
-
     public CANSparkMax motor3;
     public CANSparkMax motor4;
-    public PID leftDrivePID = new PID(0.005, 0, 0);
-    public PID rightDrivePID = new PID(0.005, 0, 0);
+    public PID leftDrivePID = new PID(0.09, 0, 0);
+    public PID rightDrivePID = new PID(0.09, 0, 0);
     
     public Drivetrain ()
     {
@@ -47,6 +46,7 @@ public class Drivetrain
 
         pastTime = System.currentTimeMillis();
         pastLeftDist = getLeftDist();
+        pastRightDist = getRightDist();
     }
 
     public void tankDrive(double leftPower, double rightPower)
@@ -72,7 +72,7 @@ public class Drivetrain
 
     public double getRightDist()
     {
-        double rawCount = (motor3.getEncoder().getPosition() + motor4.getEncoder().getPosition())/2 - startPosRight;
-        return clickToCm * rawCount;
+        double rawCount2 = (motor3.getEncoder().getPosition() + motor4.getEncoder().getPosition())/2 - startPosRight;
+        return clickToCm * rawCount2;
     }
 }
