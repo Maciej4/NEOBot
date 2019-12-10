@@ -18,6 +18,8 @@ public class Drivetrain
     public CANSparkMax motor4;
     public PID leftDrivePID = new PID(0.09, 0, 0);
     public PID rightDrivePID = new PID(0.09, 0, 0);
+    public final double turnFac = .5;
+    public final double speedFac = 2;
     
     public Drivetrain ()
     {
@@ -27,6 +29,17 @@ public class Drivetrain
         motor4 = new CANSparkMax(4, MotorType.kBrushless);
 
         pastTime = System.currentTimeMillis();
+    }
+
+    public void arcadeDrive (double power, double turn) {
+        turn *= speedFac;
+        power *=  turnFac;
+        //turn = forward/back
+        //power = turn
+        double leftPower = power - turn;
+        double rightPower = power + turn;
+
+        tankDrivePID(leftPower, rightPower);
     }
 
     public void tankDrivePID (double leftGoalPower, double rightGoalPower){

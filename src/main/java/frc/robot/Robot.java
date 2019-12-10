@@ -50,8 +50,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    double leftGoal = handleDeadband(-joy.getRawAxis(1), 0.05);
-    double rightGoal = handleDeadband(joy.getRawAxis(5), 0.05);
+    double leftGoal = handleDeadband(joy.getRawAxis(4), 0.05);
+    double rightGoal = handleDeadband(joy.getRawAxis(1), 0.05);
 
     //System.out.println("Gamer");
 
@@ -66,7 +66,9 @@ public class Robot extends TimedRobot {
     //System.out.println("LeftGoal: " + leftGoal + " LeftVel:" + leftActual + " LeftPower" + leftPower);
     //System.out.println("RightGoal: " + leftGoal + "RightVel:" + rightActual + " RightPower" + rightPower);
     
-    drivetrain.tankDrivePID(leftGoal, rightGoal);
+    // drivetrain.tankDrivePID(leftGoal, rightGoal);
+
+    drivetrain.arcadeDrive(leftGoal, rightGoal);
 
     //System.out.println("Left Pos: " + drivetrain.getLeftDist() + "; Right Pos: " + drivetrain.getRightDist());
   }
