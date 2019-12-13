@@ -51,13 +51,26 @@ public class AutoDrive
         follower = new HolonomicPIDVAFollower(translationalPid, translationalPid, headingPid);
 
         follower.followTrajectory(trajectory);
+
+        init();
     }
 
     public void loop(double t)
     {
-        //for(t in 0..10) {}
-        poseEstimate = trajectory.get(t);
-        signal = follower.update(poseEstimate);
-        System.out.println(signal);
+        ////for(t in 0..10) {}
+        // poseEstimate = trajectory.get(t);
+        // signal = follower.update(poseEstimate);
+        // System.out.println(signal);
+    }
+
+    public void init()
+    {
+        for(double t = 0; t < 4; t += 0.1) {
+            // poseEstimate = trajectory.get(t);
+            // System.out.println("Pose Estimate: " + poseEstimate);
+            // signal = follower.update(poseEstimate);
+            // System.out.println("Signal: " + signal);
+            System.out.println(profile.get(t));
+        }
     }
 }

@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    Context.robotController.autoDrive.loop((System.currentTimeMillis() - origTime)/5);
+    // Context.robotController.autoDrive.loop((System.currentTimeMillis() - origTime)/5);
   }
 
   @Override
@@ -35,6 +35,8 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     double linearPower = Deadband.handle(joy.getRawAxis(1), Context.joystickMaxDeadband);
     double turnPower = Deadband.handle(joy.getRawAxis(4), Context.joystickMaxDeadband);
+    
+    // System.out.println("Heading: " + Context.robotController.navX.getHeading());
 
     Context.robotController.drivetrain.arcadeDrive(linearPower, turnPower);
   }
