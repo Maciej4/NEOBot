@@ -17,8 +17,7 @@ public class Robot extends TimedRobot {
   public LinearAccelerator leftLinAccel = new LinearAccelerator(stepSizeMaster);
   public LinearAccelerator rightLinAccel = new LinearAccelerator(stepSizeMaster);
   public double origTime;
-  // public AutoDrive autodrive = new AutoDrive();
-  //public RoadRunnerSandbox game = new RoadRunnerSandbox();
+  public AutoDrive autodrive = new AutoDrive();
 
   @Override
   public void robotInit() {
@@ -31,8 +30,8 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() {
-    // autodrive.loop((origTime - System.currentTimeMillis())/5);
+  public void autonomousPeriodic() 
+    autodrive.loop((origTime - System.currentTimeMillis())/5);
   }
 
   @Override
@@ -53,23 +52,6 @@ public class Robot extends TimedRobot {
     double leftGoal = handleDeadband(joy.getRawAxis(4), 0.05);
     double rightGoal = handleDeadband(joy.getRawAxis(1), 0.05);
 
-    //System.out.println("Gamer");
-
-    //double leftPower = leftLinAccel.update(leftGoal);
-    //double rightPower = rightLinAccel.update(rightGoal);
-
-    //double leftPower = 20*leftPID.Update(leftGoal, leftActual, 0.01);
-    //double rightPowerTime = 20*rightPID.Update(rightGoal, rightActual, 0.01);
-    //double rightPower = 0;
-
-    //System.out.println("-----------");
-    //System.out.println("LeftGoal: " + leftGoal + " LeftVel:" + leftActual + " LeftPower" + leftPower);
-    //System.out.println("RightGoal: " + leftGoal + "RightVel:" + rightActual + " RightPower" + rightPower);
-    
-    // drivetrain.tankDrivePID(leftGoal, rightGoal);
-
     drivetrain.arcadeDrive(leftGoal, rightGoal);
-
-    //System.out.println("Left Pos: " + drivetrain.getLeftDist() + "; Right Pos: " + drivetrain.getRightDist());
   }
 }

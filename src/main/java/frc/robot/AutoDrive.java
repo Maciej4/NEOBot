@@ -13,7 +13,6 @@ import com.acmerobotics.roadrunner.profile.MotionState;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryGenerator;
 import com.acmerobotics.roadrunner.trajectory.constraints.DriveConstraints;
-import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryConstraints;
 
 public class AutoDrive
 {
@@ -26,7 +25,6 @@ public class AutoDrive
     public PIDCoefficients translationalPid;
     public PIDCoefficients headingPid;
     public HolonomicPIDVAFollower follower;
-    //public final TrajectoryConstraints trajectoryConstraints = new TrajectoryConstraints(20.0, 40.0, 80.0, 1.0, 2.0, 4.0);
 
     public AutoDrive()
     {
@@ -46,7 +44,7 @@ public class AutoDrive
             .build();
 
         constraints = new DriveConstraints(20.0, 40.0, 80.0, 1.0, 2.0, 4.0);
-        //trajectory = TrajectoryGenerator.generateTrajectory(path, constraints);
+        trajectory = TrajectoryGenerator.INSTANCE.generateTrajectory(path, constraints);
 
         translationalPid = new PIDCoefficients(5.0, 0.0, 0.0);
         headingPid = new PIDCoefficients(2.0, 0.0, 0.0);
