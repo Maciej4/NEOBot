@@ -18,6 +18,7 @@ public class Robot extends TimedRobot {
   public LinearAccelerator rightLinAccel = new LinearAccelerator(stepSizeMaster);
   public double origTime;
   public AutoDrive autodrive = new AutoDrive();
+  public NavX navX = new NavX();
 
   @Override
   public void robotInit() {
