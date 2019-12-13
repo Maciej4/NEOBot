@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    // Context.robotController.autoDrive.loop((System.currentTimeMillis() - origTime)/5);
+    Context.robotController.autoDrive.loop((System.currentTimeMillis() - origTime)/1000);
   }
 
   @Override

@@ -14,6 +14,8 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryGenerator;
 import com.acmerobotics.roadrunner.trajectory.constraints.DriveConstraints;
 
+import frc.robot.util.Context;
+
 public class AutoDrive
 {
     public MotionProfile profile;
@@ -57,6 +59,7 @@ public class AutoDrive
 
     public void loop(double t)
     {
+        Context.robotController.drivetrain.arcadeDrive(profile.get(t).getV(), 0);
         ////for(t in 0..10) {}
         // poseEstimate = trajectory.get(t);
         // signal = follower.update(poseEstimate);
