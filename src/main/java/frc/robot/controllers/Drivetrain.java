@@ -8,38 +8,34 @@ import frc.robot.util.*;
 public class Drivetrain
 {
     public final double clickToCm = 2*Math.PI; // 10*3.14159263579/5
+    public final double turnFac = .5, speedFac = 2;
 
-    public double startPosLeft = 0;
-    public double startPosRight = 0;
-    public double pastLeftDist = 0;
-    public double pastRightDist = 0;
+    public double startPosLeft = 0, startPosRight = 0;
+    public double pastLeftDist = 0, pastRightDist = 0;
     public long pastTime;
-    public CANSparkMax motor1;
-    public CANSparkMax motor2;
-    public CANSparkMax motor3;
-    public CANSparkMax motor4;
+
+    public CANSparkMax leftMotor1, leftMotor2, rightMotor1, rightMotor2;
+
     public PID leftDrivePID = new PID(0.09, 0, 0);
     public PID rightDrivePID = new PID(0.09, 0, 0);
-    public final double turnFac = .5;
-    public final double speedFac = 2;
     
     public Drivetrain ()
     {
-        motor1 = new CANSparkMax(1, MotorType.kBrushless);
-        motor2 = new CANSparkMax(2, MotorType.kBrushless);
-        motor3 = new CANSparkMax(3, MotorType.kBrushless);
-        motor4 = new CANSparkMax(4, MotorType.kBrushless);
+        leftMotor1 = new CANSparkMax(1, MotorType.kBrushless);
+        leftMotor2 = new CANSparkMax(2, MotorType.kBrushless);
+        rightMotor1 = new CANSparkMax(3, MotorType.kBrushless);
+        rightMotor2 = new CANSparkMax(4, MotorType.kBrushless);
 
         pastTime = System.currentTimeMillis();
     }
 
     public void arcadeDrive (double power, double turn) {
-        turn *= speedFac;
-        power *=  turnFac;
+        power *= speedFac;
+        turn *=  turnFac;
         //turn = forward/back
         //power = turn
-        double leftPower = power - turn;
-        double rightPower = power + turn;
+        double leftPower = turn - power;
+        double rightPower = turn + power;
 
         tankDrivePID(leftPower, rightPower);
     }
@@ -66,28 +62,28 @@ public class Drivetrain
 
     public void tankDrive(double leftPower, double rightPower)
     {
-        motor1.set(leftPower);
-        motor2.set(leftPower);
-        motor3.set(rightPower);
-        motor4.set(rightPower);
+        leftMotor1.set(leftPower);
+        leftMotor2.set(leftPower);
+        rightMotor1.set(rightPower);
+        rightMotor2.set(rightPower);
     }
 
     public void resetEncoders()
     {
-        startPosLeft = (motor1.getEncoder().getPosition() + motor2.getEncoder().getPosition())/2;
-        startPosRight = (motor3.getEncoder().getPosition() + motor4.getEncoder().getPosition())/2;
+        startPosLeft = (leftMotor1.getEncoder().getPosition() + leftMotor2.getEncoder().getPosition())/2;
+        startPosRight = (rightMotor1.getEncoder().getPosition() + rightMotor2.getEncoder().getPosition())/2;
     }
 
     public double getLeftDist()
     {
         //10 cm wheel diameter
-        double rawCount = (motor1.getEncoder().getPosition() + motor2.getEncoder().getPosition())/2 - startPosLeft;
+        double rawCount = (leftMotor1.getEncoder().getPosition() + leftMotor2.getEncoder().getPosition())/2 - startPosLeft;
         return clickToCm * rawCount;
     }
 
     public double getRightDist()
     {
-        double rawCount2 = (motor3.getEncoder().getPosition() + motor4.getEncoder().getPosition())/2 - startPosRight;
+        double rawCount2 = (rightMotor1.getEncoder().getPosition() + rightMotor2.getEncoder().getPosition())/2 - startPosRight;
         return clickToCm * rawCount2;
     }
 }

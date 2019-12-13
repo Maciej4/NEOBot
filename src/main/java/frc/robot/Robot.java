@@ -33,9 +33,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    double leftGoal = Deadband.handle(joy.getRawAxis(4), 0.05);
-    double rightGoal = Deadband.handle(joy.getRawAxis(1), 0.05);
+    double linearPower = Deadband.handle(joy.getRawAxis(1), 0.05);
+    double turnPower = Deadband.handle(joy.getRawAxis(4), 0.05);
 
-    Context.robotController.drivetrain.arcadeDrive(leftGoal, rightGoal);
+    Context.robotController.drivetrain.arcadeDrive(linearPower, turnPower);
   }
 }
