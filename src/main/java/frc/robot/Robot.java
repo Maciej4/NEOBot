@@ -2,11 +2,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import com.acmerobotics.roadrunner.path.Path;
-import com.acmerobotics.roadrunner.profile.MotionProfile;
-import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
-import com.acmerobotics.roadrunner.profile.MotionState;
-import com.acmerobotics.roadrunner.util.Angle;
 
 public class Robot extends TimedRobot {
   Drivetrain drivetrain = new Drivetrain();
@@ -18,7 +13,6 @@ public class Robot extends TimedRobot {
   public LinearAccelerator rightLinAccel = new LinearAccelerator(stepSizeMaster);
   public double origTime;
   public AutoDrive autodrive = new AutoDrive();
-  //public RoadRunnerSandbox game = new RoadRunnerSandbox();
 
   @Override
   public void robotInit() {
@@ -52,17 +46,9 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     double leftGoal = handleDeadband(-joy.getRawAxis(1), 0.05);
     double rightGoal = handleDeadband(joy.getRawAxis(5), 0.05);
-    //double leftActual = ((motor1.getEncoder().getVelocity() + motor2.getEncoder().getVelocity())/2)/5000;
-    //double rightActual = ((motor3.getEncoder().getVelocity() + motor4.getEncoder().getVelocity())/2)/5000;
+
     double leftPower = leftLinAccel.update(leftGoal);
     double rightPower = rightLinAccel.update(rightGoal);
-    //double leftPower = 20*leftPID.Update(leftGoal, leftActual, 0.01);
-    //double rightPowerTime = 20*rightPID.Update(rightGoal, rightActual, 0.01);
-    //double rightPower = 0;
-
-    //System.out.println("-----------");
-    //System.out.println("LeftGoal: " + leftGoal + " LeftVel:" + leftActual + " LeftPower" + leftPower);
-    //System.out.println("RightGoal: " + leftGoal + "RightVel:" + rightActual + " RightPower" + rightPower);
 
     drivetrain.tankDrive(leftPower, rightPower);
 
