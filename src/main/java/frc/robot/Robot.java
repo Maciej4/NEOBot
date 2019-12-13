@@ -7,7 +7,7 @@ import frc.robot.util.*;
 
 public class Robot extends TimedRobot {
   public RobotController robotController;
-  public Joystick joy = new Joystick(0);
+  public Joystick joy = new Joystick(Context.joystickID);
 
   public double origTime;
 
@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    Context.robotController.autoDrive.loop((origTime - System.currentTimeMillis())/5);
+    Context.robotController.autoDrive.loop((System.currentTimeMillis() - origTime)/5);
   }
 
   @Override
@@ -33,8 +33,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    double linearPower = Deadband.handle(joy.getRawAxis(1), 0.05);
-    double turnPower = Deadband.handle(joy.getRawAxis(4), 0.05);
+    double linearPower = Deadband.handle(joy.getRawAxis(1), Context.joystickMaxDeadband);
+    double turnPower = Deadband.handle(joy.getRawAxis(4), Context.joystickMaxDeadband);
 
     Context.robotController.drivetrain.arcadeDrive(linearPower, turnPower);
   }

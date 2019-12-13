@@ -7,8 +7,7 @@ import frc.robot.util.*;
 
 public class Drivetrain
 {
-    public final double clickToCm = 2*Math.PI; // 10*3.14159263579/5
-    public final double turnFac = .5, speedFac = 2;
+    public final double speedFac = 2, turnFac = .5;
 
     public double startPosLeft = 0, startPosRight = 0;
     public double pastLeftDist = 0, pastRightDist = 0;
@@ -21,10 +20,10 @@ public class Drivetrain
     
     public Drivetrain ()
     {
-        leftMotor1 = new CANSparkMax(1, MotorType.kBrushless);
-        leftMotor2 = new CANSparkMax(2, MotorType.kBrushless);
-        rightMotor1 = new CANSparkMax(3, MotorType.kBrushless);
-        rightMotor2 = new CANSparkMax(4, MotorType.kBrushless);
+        leftMotor1 = new CANSparkMax(Context.leftMotor1ID, MotorType.kBrushless);
+        leftMotor2 = new CANSparkMax(Context.leftMotor2ID, MotorType.kBrushless);
+        rightMotor1 = new CANSparkMax(Context.rightMotor1ID, MotorType.kBrushless);
+        rightMotor2 = new CANSparkMax(Context.rightMotor2ID, MotorType.kBrushless);
 
         pastTime = System.currentTimeMillis();
     }
@@ -32,8 +31,6 @@ public class Drivetrain
     public void arcadeDrive (double power, double turn) {
         power *= speedFac;
         turn *=  turnFac;
-        //turn = forward/back
-        //power = turn
         double leftPower = turn - power;
         double rightPower = turn + power;
 
@@ -51,7 +48,7 @@ public class Drivetrain
         double rightVelocity = rightDistTraveled/deltaTime;
         double rightPower = rightDrivePID.update(rightGoalPower, rightVelocity, deltaTime);
 
-        System.out.println("Left Power: " + leftPower + " ; Right Power: " + rightPower);
+        // System.out.println("Left Power: " + leftPower + " ; Right Power: " + rightPower);
 
         tankDrive(leftPower, rightPower);
 
@@ -78,12 +75,12 @@ public class Drivetrain
     {
         //10 cm wheel diameter
         double rawCount = (leftMotor1.getEncoder().getPosition() + leftMotor2.getEncoder().getPosition())/2 - startPosLeft;
-        return clickToCm * rawCount;
+        return Context.driveClickToCm * rawCount;
     }
 
     public double getRightDist()
     {
         double rawCount2 = (rightMotor1.getEncoder().getPosition() + rightMotor2.getEncoder().getPosition())/2 - startPosRight;
-        return clickToCm * rawCount2;
+        return Context.driveClickToCm * rawCount2;
     }
 }
