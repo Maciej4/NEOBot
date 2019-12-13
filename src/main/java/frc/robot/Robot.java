@@ -2,27 +2,18 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-// import com.acmerobotics.roadrunner.path.Path;
-// import com.acmerobotics.roadrunner.profile.MotionProfile;
-// import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
-// import com.acmerobotics.roadrunner.profile.MotionState;
-// import com.acmerobotics.roadrunner.util.Angle;
+import frc.robot.controllers.*;
+import frc.robot.util.*;
 
 public class Robot extends TimedRobot {
-  Drivetrain drivetrain = new Drivetrain();
+  public RobotController robotController;
   public Joystick joy = new Joystick(0);
-  //public PID leftPID = new PID(0.03,0,0.001);
-  //public PID rightPID = new PID(0.03,0,0.001);
-  public double stepSizeMaster = 0.05;
-  public LinearAccelerator leftLinAccel = new LinearAccelerator(stepSizeMaster);
-  public LinearAccelerator rightLinAccel = new LinearAccelerator(stepSizeMaster);
+
   public double origTime;
-  public AutoDrive autodrive = new AutoDrive();
-  public NavX navX = new NavX();
 
   @Override
   public void robotInit() {
-
+    robotController = new RobotController();
   }
 
   @Override
@@ -31,28 +22,20 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() 
-    autodrive.loop((origTime - System.currentTimeMillis())/5);
+  public void autonomousPeriodic() {
+    Context.robotController.autoDrive.loop((origTime - System.currentTimeMillis())/5);
   }
 
   @Override
   public void teleopInit() {
-    drivetrain.resetEncoders();
-  }
-
-  public double handleDeadband(double input, double limit) {
-    if(Math.abs(input) < limit)
-    {
-      input = 0;
-    }
-    return input;
+    Context.robotController.drivetrain.resetEncoders();
   }
 
   @Override
   public void teleopPeriodic() {
-    double leftGoal = handleDeadband(joy.getRawAxis(4), 0.05);
-    double rightGoal = handleDeadband(joy.getRawAxis(1), 0.05);
+    double leftGoal = Deadband.handle(joy.getRawAxis(4), 0.05);
+    double rightGoal = Deadband.handle(joy.getRawAxis(1), 0.05);
 
-    drivetrain.arcadeDrive(leftGoal, rightGoal);
+    Context.robotController.drivetrain.arcadeDrive(leftGoal, rightGoal);
   }
 }

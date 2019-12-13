@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.controllers;
 
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.drive.DriveSignal;

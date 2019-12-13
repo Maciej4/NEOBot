@@ -1,7 +1,9 @@
-package frc.robot;
+package frc.robot.controllers;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import frc.robot.util.*;
 
 public class Drivetrain
 {
