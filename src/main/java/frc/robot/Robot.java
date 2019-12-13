@@ -2,6 +2,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+// import com.acmerobotics.roadrunner.path.Path;
+// import com.acmerobotics.roadrunner.profile.MotionProfile;
+// import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
+// import com.acmerobotics.roadrunner.profile.MotionState;
+// import com.acmerobotics.roadrunner.util.Angle;
 
 public class Robot extends TimedRobot {
   Drivetrain drivetrain = new Drivetrain();
@@ -25,7 +30,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() {
+  public void autonomousPeriodic() 
     autodrive.loop((origTime - System.currentTimeMillis())/5);
   }
 
@@ -44,14 +49,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    double leftGoal = handleDeadband(-joy.getRawAxis(1), 0.05);
-    double rightGoal = handleDeadband(joy.getRawAxis(5), 0.05);
+    double leftGoal = handleDeadband(joy.getRawAxis(4), 0.05);
+    double rightGoal = handleDeadband(joy.getRawAxis(1), 0.05);
 
-    double leftPower = leftLinAccel.update(leftGoal);
-    double rightPower = rightLinAccel.update(rightGoal);
-
-    drivetrain.tankDrive(leftPower, rightPower);
-
-    System.out.println("Left Pos: " + drivetrain.getLeftDist() + "; Right Pos: " + drivetrain.getRightDist());
+    drivetrain.arcadeDrive(leftGoal, rightGoal);
   }
 }
