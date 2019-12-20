@@ -14,10 +14,8 @@ public class RobotController
         drivetrain = new Drivetrain();
         // autoDrive = new AutoDrive();
         navX = new NavX();
-        // antenna = new Antenna();
         zmqServer = new ZMQServer();
         zmqServer.start();
-        // zmqServer.run();
 
         Context.robotController = this;
     }

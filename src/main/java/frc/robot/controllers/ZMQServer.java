@@ -20,6 +20,8 @@ public class ZMQServer extends Thread
     {
         g = new Gson();
         context = new ZContext();
+        robotPacket = new RobotPacket();
+        unityPacket = new UnityPacket();
         
         socket = context.createSocket(ZMQ.REP);
         socket.bind("tcp://*:5555");
@@ -34,15 +36,13 @@ public class ZMQServer extends Thread
             //Recieving data and putting it into object
             String replyString = new String(socket.recv(0), ZMQ.CHARSET);
 
-            System.out.println("Received: [" + replyString + "]");
+            // System.out.println("Received: [" + replyString + "]");
 
             unityPacket = g.fromJson(replyString, UnityPacket.class);
 
-            System.out.println("Heartbeat = " + unityPacket.heartbeat);
+            // System.out.println("Heartbeat = " + unityPacket.heartbeat);
 
             //Responding to unity server with data
-            RobotPacket robotPacket = new RobotPacket();
-
             robotPacket.heartbeat = System.currentTimeMillis();
 
             String response = g.toJson(robotPacket);

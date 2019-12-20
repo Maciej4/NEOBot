@@ -33,31 +33,42 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    // double maxPower = 0.5;
-    // double maxTurn = 0.5;
+    double maxPower = 0.5;
+    double maxTurn = 0.5;
+    double linearPower = 0;
+    double turnPower = 0;
+    boolean WKey = Context.robotController.zmqServer.unityPacket.WKey;
+    boolean AKey = Context.robotController.zmqServer.unityPacket.AKey;
+    boolean SKey = Context.robotController.zmqServer.unityPacket.SKey;
+    boolean DKey = Context.robotController.zmqServer.unityPacket.DKey;
 
-    // double linearPower = Deadband.handle(joy.getRawAxis(1), Context.joystickMaxDeadband);
-    // double turnPower = Deadband.handle(joy.getRawAxis(4), Context.joystickMaxDeadband);
-    // Context.robotController.antenna.loop();
-
-    // boolean wKeyState = Context.robotController.antenna.getWKey();
-
-    // System.out.println("W Key State: " + wKeyState);
-
-    // System.out.println("Power: " + (maxPower * Context.robotController.antenna.getPower()) + " ; Turn: " + (maxTurn * Context.robotController.antenna.getTurn()));
-
-    // double linearPower = maxPower * Context.robotController.antenna.getPower();
-    // double turnPower = maxTurn * Context.robotController.antenna.getTurn();
-
-    // if (wKeyState)
-    // {
-    //   turnPower = 0.5;
-    // }
+    System.out.println(
+      "W key state = " + WKey + " ;" +
+      "A key state = " + AKey + " ;" +
+      "S key state = " + SKey + " ;" +
+      "D key state = " + DKey + " ;"
+    );
     
-    // System.out.println("Heading: " + Context.robotController.navX.getHeading());
+    // Linear Power from Keys
+    if(WKey)
+    {
+      linearPower = maxPower;
+    }
+    else if (SKey)
+    {
+      linearPower = -maxPower;
+    }
 
-    // Context.robotController.drivetrain.arcadeDrive(linearPower, turnPower);
+    // Turn Power from Keys
+    if(AKey)
+    {
+      turnPower = maxTurn;
+    }
+    else if (DKey)
+    {
+      turnPower = -maxTurn;
+    }
 
-    Context.robotController.drivetrain.arcadeDrive(0, 0);
+    Context.robotController.drivetrain.arcadeDrive(linearPower, turnPower);
   }
 }

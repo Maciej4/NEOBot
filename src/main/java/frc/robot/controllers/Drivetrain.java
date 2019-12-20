@@ -7,7 +7,7 @@ import frc.robot.util.*;
 
 public class Drivetrain
 {
-    public final double speedFac = 1, turnFac = 1;
+    public final double speedFac = -1, turnFac = -1;
 
     public double startPosLeft = 0, startPosRight = 0;
     public double pastLeftDist = 0, pastRightDist = 0;
