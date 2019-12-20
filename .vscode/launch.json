@@ -4,18 +4,52 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - ZMQServer",
+      "request": "launch",
+      "mainClass": "frc.robot.controllers.ZMQServer",
+      "projectName": "NEOBot"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - hwserver",
+      "request": "launch",
+      "mainClass": "frc.robot.controllers.hwserver",
+      "projectName": "NEOBot"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - Program",
+      "request": "launch",
+      "mainClass": "frc.robot.controllers.Program",
+      "projectName": "NEOBot"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - SocketServerExample",
+      "request": "launch",
+      "mainClass": "frc.robot.controllers.SocketServerExample",
+      "projectName": "NEOBot"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - NodeJsEcho",
+      "request": "launch",
+      "mainClass": "frc.robot.controllers.NodeJsEcho",
+      "projectName": "NEOBot"
+    },
     {
       "type": "wpilib",
       "name": "WPILib Desktop Debug",
       "request": "launch",
-      "desktop": true,
+      "desktop": true
     },
     {
       "type": "wpilib",
       "name": "WPILib roboRIO Debug",
       "request": "launch",
-      "desktop": false,
+      "desktop": false
     }
   ]
 }

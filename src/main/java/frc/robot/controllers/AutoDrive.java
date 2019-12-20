@@ -68,12 +68,12 @@ public class AutoDrive
 
     public void init()
     {
-        for(double t = 0; t < 4; t += 0.1) {
+        for(double t = 0.1; t < 4; t += 0.1) {
             // poseEstimate = trajectory.get(t);
             // System.out.println("Pose Estimate: " + poseEstimate);
             // signal = follower.update(poseEstimate);
             // System.out.println("Signal: " + signal);
-            System.out.println(profile.get(t));
+            System.out.println("Time: " + t + " ; " + profile.get(t) + " ; Velocity: " + profile.get(t).getV());
         }
     }
 }
