@@ -1,10 +1,14 @@
 package frc.robot.controllers;
 
+import java.util.List;
+
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.drive.DriveSignal;
 import com.acmerobotics.roadrunner.followers.TankPIDVAFollower;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.kinematics.Kinematics;
+import com.acmerobotics.roadrunner.kinematics.TankKinematics;
 import com.acmerobotics.roadrunner.path.Path;
 import com.acmerobotics.roadrunner.path.PathBuilder;
 import com.acmerobotics.roadrunner.profile.MotionProfile;
@@ -55,14 +59,24 @@ public class AutoDrive
         follower.followTrajectory(trajectory);
     }
 
+    public void startSpline()
+    {
+        follower.followTrajectory(trajectory);
+    }
+
     public void loop(double t)
     {
-        double scaledVel = profile.get(t).getV()/100.0;
+        // double scaledVel = profile.get(t).getV()/100.0;
 
-        // DriveSignal ds = follower.update();
+        DriveSignal ds = follower.update(new Pose2d(0, 0));
+        List<Double> velocities = TankKinematics.robotToWheelVelocities(ds.getVel(), Context.TRACK_WIDTH);
+        List<Double> acceleraations = TankKinematics.robotToWheelAccelerations(ds.getAccel(), Context.TRACK_WIDTH);
+        List<Double> powers = Kinematics.calculateMotorFeedforward(velocities, acceleraations, Context.kV, Context.kA, Context.kStatic);
+        // System.out.println("Power1: " + powers.get(0) + ", Power2: " + powers.get(1) + ", Len: " + powers.size());
+        System.out.println(ds + ", error: " + follower.getLastError() + ", vels: " + velocities);
 
-        System.out.println("Velocity: " + scaledVel);
-        Context.robotController.drivetrain.arcadeDrive(limitVal(scaledVel, -0.4, 0.4), 0);
+        // System.out.println("Velocity: " + scaledVel);
+        // Context.robotController.drivetrain.arcadeDrive(limitVal(scaledVel, -0.4, 0.4), 0);
     }
 
     // public void init()
