@@ -10,10 +10,17 @@ public class Robot extends TimedRobot {
   public Joystick joy = new Joystick(Context.joystickID);
 
   public double origTime;
+  public double robotStartTime;
 
   @Override
   public void robotInit() {
     robotController = new RobotController();
+    robotStartTime = System.currentTimeMillis()/1000.0;
+  }
+
+  @Override
+  public void robotPeriodic() {
+    // Context.robotController.autoDrive.loop(System.currentTimeMillis()/1000.0-robotStartTime);
   }
 
   @Override
@@ -23,7 +30,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    // Context.robotController.autoDrive.loop((System.currentTimeMillis() - origTime)/1000);
+    Context.robotController.autoDrive.loop((System.currentTimeMillis() - origTime)/1000);
   }
 
   @Override
@@ -42,12 +49,12 @@ public class Robot extends TimedRobot {
     boolean SKey = Context.robotController.zmqServer.unityPacket.SKey;
     boolean DKey = Context.robotController.zmqServer.unityPacket.DKey;
 
-    System.out.println(
-      "W key state = " + WKey + " ;" +
-      "A key state = " + AKey + " ;" +
-      "S key state = " + SKey + " ;" +
-      "D key state = " + DKey + " ;"
-    );
+    // System.out.println(
+    //   "W key state = " + WKey + " ;" +
+    //   "A key state = " + AKey + " ;" +
+    //   "S key state = " + SKey + " ;" +
+    //   "D key state = " + DKey + " ;"
+    // );
     
     // Linear Power from Keys
     if(WKey)

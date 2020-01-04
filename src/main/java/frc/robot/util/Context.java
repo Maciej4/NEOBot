@@ -1,6 +1,14 @@
 package frc.robot.util;
 
+import com.acmerobotics.roadrunner.trajectory.constraints.DriveConstraints;
+
 import frc.robot.controllers.RobotController;
+
+// import static org.firstinspires.ftc.teamcode.drive.DriveConstants.BASE_CONSTRAINTS;
+// import static org.firstinspires.ftc.teamcode.drive.DriveConstants.TRACK_WIDTH;
+// import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kA;
+// import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kStatic;
+// import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
 
 public class Context {
     //----- Drivetrain Values -----
@@ -18,4 +26,14 @@ public class Context {
 
     //----- Robotcontroller Static Reference -----
     public static RobotController robotController;
+
+    //----- Acme Robotics Tank Drive -----
+    // maxVel, maxAccel, maxJerk, maxAngVel, maxAngAccel, maxAngJerk
+    public static final DriveConstraints BASE_CONSTRAINTS = new DriveConstraints(
+        20.0, 40.0, 80.0, 1.0, 2.0, 4.0
+    );
+    public static final double TRACK_WIDTH = 5;
+    public static final double kA = 5;
+    public static final double kStatic = 5;
+    public static final double kV = 5;
 }

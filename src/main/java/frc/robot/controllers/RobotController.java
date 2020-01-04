@@ -5,16 +5,16 @@ import frc.robot.util.Context;
 public class RobotController
 {
     public Drivetrain drivetrain;
-    // public AutoDrive autoDrive;
+    public AutoDrive autoDrive;
     public NavX navX;
     // public Antenna antenna;
-    public ZMQServer zmqServer;
+    public ZedZMQClient zmqServer;
 
     public RobotController () {
         drivetrain = new Drivetrain();
-        // autoDrive = new AutoDrive();
+        autoDrive = new AutoDrive();
         navX = new NavX();
-        zmqServer = new ZMQServer();
+        zmqServer = new ZedZMQClient();
         zmqServer.start();
 
         Context.robotController = this;
