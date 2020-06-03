@@ -23,16 +23,16 @@ public class Robot extends TimedRobot {
     // Context.robotController.autoDrive.loop(System.currentTimeMillis()/1000.0-robotStartTime);
   }
 
-  @Override
-  public void autonomousInit() {
-    origTime = System.currentTimeMillis();
-    Context.robotController.autoDrive.startSpline();
-  }
+  // @Override
+  // public void autonomousInit() {
+  //   origTime = System.currentTimeMillis();
+  //   Context.robotController.autoDrive.startSpline();
+  // }
 
-  @Override
-  public void autonomousPeriodic() {
-    Context.robotController.autoDrive.loop((System.currentTimeMillis() - origTime)/1000);
-  }
+  // @Override
+  // public void autonomousPeriodic() {
+  //   Context.robotController.autoDrive.loop((System.currentTimeMillis() - origTime)/1000);
+  // }
 
   @Override
   public void teleopInit() {
@@ -41,42 +41,31 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    double maxPower = 0.5;
-    double maxTurn = 0.5;
-    double linearPower = 0;
-    double turnPower = 0;
-    boolean WKey = Context.robotController.zmqServer.unityPacket.WKey;
-    boolean AKey = Context.robotController.zmqServer.unityPacket.AKey;
-    boolean SKey = Context.robotController.zmqServer.unityPacket.SKey;
-    boolean DKey = Context.robotController.zmqServer.unityPacket.DKey;
-
-    // System.out.println(
-    //   "W key state = " + WKey + " ;" +
-    //   "A key state = " + AKey + " ;" +
-    //   "S key state = " + SKey + " ;" +
-    //   "D key state = " + DKey + " ;"
-    // );
+    // double maxPower = 0.5;
+    // double maxTurn = 0.5;
+    // double linearPower = 1.0;
+    // double turnPower = 0.0;
     
     // Linear Power from Keys
-    if(WKey)
-    {
-      linearPower = maxPower;
-    }
-    else if (SKey)
-    {
-      linearPower = -maxPower;
-    }
+    // if(WKey)
+    // {
+    //   linearPower = maxPower;
+    // }
+    // else if (SKey)
+    // {
+    //   linearPower = -maxPower;
+    // }
 
-    // Turn Power from Keys
-    if(AKey)
-    {
-      turnPower = maxTurn;
-    }
-    else if (DKey)
-    {
-      turnPower = -maxTurn;
-    }
+    // // Turn Power from Keys
+    // if(AKey)
+    // {
+    //   turnPower = maxTurn;
+    // }
+    // else if (DKey)
+    // {
+    //   turnPower = -maxTurn;
+    // }
 
-    Context.robotController.drivetrain.arcadeDrive(linearPower, turnPower);
+    Context.robotController.drivetrain.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(0));
   }
 }

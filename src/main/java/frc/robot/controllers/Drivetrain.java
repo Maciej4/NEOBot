@@ -1,7 +1,6 @@
 package frc.robot.controllers;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.util.*;
 
@@ -18,14 +17,23 @@ public class Drivetrain
     public PID leftDrivePID = new PID(0.09, 0, 0);
     public PID rightDrivePID = new PID(0.09, 0, 0);
     
-    public Drivetrain ()
+    public Drivetrain (CANSparkMax leftMotor1, CANSparkMax leftMotor2, CANSparkMax rightMotor1, CANSparkMax rightMotor2)
     {
-        leftMotor1 = new CANSparkMax(Context.leftMotor1ID, MotorType.kBrushless);
-        leftMotor2 = new CANSparkMax(Context.leftMotor2ID, MotorType.kBrushless);
-        rightMotor1 = new CANSparkMax(Context.rightMotor1ID, MotorType.kBrushless);
-        rightMotor2 = new CANSparkMax(Context.rightMotor2ID, MotorType.kBrushless);
+        this.leftMotor1 = leftMotor1;
+        this.leftMotor2 = leftMotor2;
+        this.rightMotor1 = rightMotor1;
+        this.rightMotor2 = rightMotor2;
 
         pastTime = System.currentTimeMillis();
+    }
+
+    public void arcadeDrivePID (double power, double turn) {
+        power *= speedFac;
+        turn *=  turnFac;
+        double leftPower = turn - power;
+        double rightPower = turn + power;
+
+        tankDrivePID(leftPower, rightPower);
     }
 
     public void arcadeDrive (double power, double turn) {
@@ -34,7 +42,7 @@ public class Drivetrain
         double leftPower = turn - power;
         double rightPower = turn + power;
 
-        tankDrivePID(leftPower, rightPower);
+        tankDrive(leftPower, rightPower);
     }
 
     public void tankDrivePID (double leftGoalPower, double rightGoalPower){

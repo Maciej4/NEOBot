@@ -29,6 +29,25 @@ public class ZMQServer extends Thread
         System.out.println("Sucessful Server Initialization");
     }
 
+    public void awaitComms() {
+        String replyString = new String(socket.recv(0), ZMQ.CHARSET);
+
+        System.out.println("Communication recieved: \n" + replyString + "\n");
+
+        // System.out.println("Received: [" + replyString + "]");
+
+        unityPacket = g.fromJson(replyString, UnityPacket.class);
+
+        // System.out.println("Heartbeat = " + unityPacket.heartbeat);
+
+        //Responding to unity server with data
+        robotPacket.heartbeat = System.currentTimeMillis();
+
+        String response = g.toJson(robotPacket);
+        
+        socket.send(response.getBytes(ZMQ.CHARSET), 0);
+    }
+
     public void run()
     {
         while(!Thread.currentThread().isInterrupted())
