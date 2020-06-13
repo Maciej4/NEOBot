@@ -21,8 +21,8 @@ public class UnityPacket
     public double nmfColorB = 0.0;
     public double nmfEncoderInterfacePosition = 0.0;
     public double omniNeoPosition = 0.0;
-    public boolean[] joyButtonArray;
-    public double[] joyAxisArray;
+    public boolean[] joyButtonArray = new boolean[]{false, false, false, false};
+    public double[] joyAxisArray = new double[]{0.0, 0.0, 0.0, 0.0};
     public int joyPOV = 0;
     public double navXHeading = 0.0;
 }
