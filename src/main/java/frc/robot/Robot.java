@@ -1,21 +1,31 @@
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.controllers.*;
 import frc.robot.util.*;
 
 public class Robot extends TimedRobot {
-  public RobotController robotController;
-  public Joystick joy = new Joystick(Context.joystickID);
+  // public RobotController robotController;
+  public Joystick joy = HardwareFactory.newJoystick(0);
 
-  public double origTime;
-  public double robotStartTime;
+  // public double origTime;
+  // public double robotStartTime;
+
+  CANSparkMax lm1 = HardwareFactory.newCANSparkMax(0, MotorType.kBrushless);
+  CANSparkMax lm2 = HardwareFactory.newCANSparkMax(1, MotorType.kBrushless);
+  CANSparkMax rm1 = HardwareFactory.newCANSparkMax(2, MotorType.kBrushless);
+  CANSparkMax rm2 = HardwareFactory.newCANSparkMax(3, MotorType.kBrushless);
+
+  public double motorPower = 0.0;
 
   @Override
   public void robotInit() {
-    robotController = new RobotController();
-    robotStartTime = System.currentTimeMillis()/1000.0;
+    // robotController = new RobotController();
+    // robotStartTime = System.currentTimeMillis()/1000.0;
   }
 
   @Override
@@ -36,36 +46,20 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    Context.robotController.drivetrain.resetEncoders();
+    // Context.robotController.drivetrain.resetEncoders();
   }
 
   @Override
   public void teleopPeriodic() {
-    // double maxPower = 0.5;
-    // double maxTurn = 0.5;
-    // double linearPower = 1.0;
-    // double turnPower = 0.0;
+    double leftPower = -joy.getRawAxis(0) + joy.getRawAxis(1);
+    double rightPower = -joy.getRawAxis(0) - joy.getRawAxis(1);
+
+    lm1.set(leftPower);
+    lm2.set(leftPower);
+    rm1.set(rightPower);
+    rm2.set(rightPower);
     
-    // Linear Power from Keys
-    // if(WKey)
-    // {
-    //   linearPower = maxPower;
-    // }
-    // else if (SKey)
-    // {
-    //   linearPower = -maxPower;
-    // }
 
-    // // Turn Power from Keys
-    // if(AKey)
-    // {
-    //   turnPower = maxTurn;
-    // }
-    // else if (DKey)
-    // {
-    //   turnPower = -maxTurn;
-    // }
-
-    Context.robotController.drivetrain.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(0));
+    // Context.robotController.drivetrain.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(0));
   }
 }

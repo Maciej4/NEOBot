@@ -15,6 +15,7 @@ public class ZMQServer extends Thread
     private ZContext context;
     public RobotPacket robotPacket;
     public UnityPacket unityPacket;
+    public long lastRecived = 0;
 
     public ZMQServer()
     {
@@ -33,6 +34,8 @@ public class ZMQServer extends Thread
         String replyString = new String(socket.recv(0), ZMQ.CHARSET);
 
         System.out.println("Communication recieved: \n" + replyString + "\n");
+
+        lastRecived = System.currentTimeMillis();
 
         // System.out.println("Received: [" + replyString + "]");
 
@@ -54,6 +57,8 @@ public class ZMQServer extends Thread
         {
             //Recieving data and putting it into object
             String replyString = new String(socket.recv(0), ZMQ.CHARSET);
+
+            lastRecived = System.currentTimeMillis();
 
             // System.out.println("Received: [" + replyString + "]");
 
