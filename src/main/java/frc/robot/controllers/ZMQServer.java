@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 
 public class ZMQServer extends Thread
 {
+    // DO NOT EDIT, MAY BREAK CONNECTION TO SIMULATOR
     private Gson g;
     private ZMQ.Socket socket;
     private ZContext context;

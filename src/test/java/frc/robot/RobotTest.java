@@ -134,7 +134,7 @@ public class RobotTest {
 
     @Test
     public void simulateRobot() {
-        System.out.println("Testing testing 123");
+        // System.out.println("Testing testing 123");
         Robot robot = new Robot();
 
         zmqServer = new ZMQServer();
