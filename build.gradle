@@ -54,13 +54,37 @@ dependencies {
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
 
-    testCompile 'junit:junit:4.12'
-    testCompile "org.mockito:mockito-core:2.+"
+    compile 'junit:junit:latest.release'
+    compile "org.mockito:mockito-core:latest.release"
+	// compile "org.powermock:powermock-core:latest.release"
+	// compile "org.powermock:powermock-api-mockito:latest.release"
+	// compile "org.powermock:powermock-modules-test-mockito:latest.release"
+	// compile "org.powermock:powermock-module-junit4:latest.release"
 
-    compile 'com.acmerobotics.roadrunner:core:0.4.7'
+    compile 'com.acmerobotics.roadrunner:core:latest.release'
     // https://mvnrepository.com/artifact/org.zeromq/jeromq
-    compile group: 'org.zeromq', name: 'jeromq', version: '0.4.0'
-    compile 'com.google.code.gson:gson:2.8.6'
+    compile group: 'org.zeromq', name: 'jeromq', version: 'latest.release'
+    compile 'com.google.code.gson:gson:latest.release'
+
+    // testCompile "org.powermock:powermock-core:latest.release"
+	// compile "org.powermock:powermock-api-mockito:latest.release"
+	// compile "org.powermock:powermock-api-mockito2:latest.release"
+	// compile "org.powermock:powermock-api-mockito-common:latest.release"
+	// compile "org.powermock:powermock-api-support:latest.release"
+	// compile "org.powermock:powermock-module-junit4-rule:latest.release"
+	// compile "org.powermock:powermock-classloading-xstream:latest.release"
+	// compile "org.powermock:powermock-module-junit4-rule-agent:latest.release"
+	// compile "org.powermock:powermock-api-easymock:latest.release"
+	// testCompile "org.powermock:powermock-module-testng:latest.release"
+	// testCompile "org.powermock:powermock-module-junit4:latest.release"
+	// testCompile "org.easymock:easymock:latest.release"
+	// compile "org.mockito:mockito-core:latest.release"
+	// compile "junit:junit:latest.release"
+	// testCompile "org.assertj:assertj-core:latest.release"
+	// compile "org.springframework:spring-core:latest.release"
+	// compile "org.springframework:spring-context:latest.release"
+	// testCompile "org.springframework:spring-test:latest.release"
+	// compile "org.apache.commons:commons-lang3:latest.release"
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
