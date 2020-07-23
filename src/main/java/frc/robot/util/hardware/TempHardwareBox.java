@@ -1,7 +1,6 @@
 package frc.robot.util.hardware;
 
-public class TempHardwareBox
-{
+public class TempHardwareBox {
     public String type;
     public boolean[] booleans;
     public int[] integers;

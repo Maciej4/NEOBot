@@ -1,20 +1,12 @@
 package frc.robot.util.hardware;
 
-public class CommCANSparkMax extends Hardware implements Motor
-{
-    public CommCANSparkMax(int canID)
-    {
+public class CommCANSparkMax extends Hardware implements Motor {
+    public CommCANSparkMax(int canID) {
         type = "CANSparkMax";
         booleans = new boolean[0];
         integers = new int[] { canID };
         doubles = new double[] { 0.0, 0.0 };
         strings = new String[0];
-    }
-
-    @Override
-    public String getHardwareType()
-    {
-        return type;
     }
 
     @Override
@@ -40,5 +32,10 @@ public class CommCANSparkMax extends Hardware implements Motor
     @Override
     public int getMotorID() {
         return integers[0];
+    }
+
+    @Override
+    public void copyRelValues(Hardware other) {
+        this.doubles[1] = other.doubles[1];
     }
 }

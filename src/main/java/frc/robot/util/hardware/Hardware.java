@@ -8,7 +8,10 @@ public abstract class Hardware
     public double[] doubles;
     public String[] strings;
 
-    public abstract String getHardwareType();
+    public String getHardwareType()
+    {
+        return type;
+    }
 
     public void CopyValues(Hardware other)
     {
@@ -27,4 +30,6 @@ public abstract class Hardware
         this.doubles = other.doubles;
         this.strings = other.strings;
     }
+
+    public abstract void copyRelValues(Hardware other);
 }

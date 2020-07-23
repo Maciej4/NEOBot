@@ -7,9 +7,7 @@ import org.zeromq.ZContext;
 import frc.robot.util.RobotPacket;
 import frc.robot.util.UnityPacket;
 import frc.robot.util.hardware.CommCANSparkMax;
-import frc.robot.util.hardware.Hardware;
-import frc.robot.util.hardware.CommTalonFX;
-import frc.robot.util.hardware.TempHardwareBox;
+import frc.robot.util.hardware.*;
 
 import com.google.gson.Gson;
 
@@ -58,6 +56,13 @@ public class ZMQServer extends Thread
 
         robotPacket.hardware.addAll(unityPacket.hardware);
 
+        robotPacket.hardwareString.clear();
+
+        for(int i = 0; i < unityPacket.hardware.size(); i++) {
+            String hardwareJson = g.toJson(robotPacket.hardware.get(i));
+            robotPacket.hardwareString.add(hardwareJson);
+        }
+
         //Responding to unity server with data
         robotPacket.heartbeat = System.currentTimeMillis();
 
@@ -75,10 +80,26 @@ public class ZMQServer extends Thread
 
             unityPacket = g.fromJson(replyString, UnityPacket.class);
             
+            unityPacket.hardware.clear();
+
+            for (String itemString : unityPacket.hardwareString) {
+                TempHardwareBox tempHardwareBox = g.fromJson(itemString, TempHardwareBox.class);
+    
+                unityPacket.hardware.add(decodeHardware(tempHardwareBox));
+            }
+
+            // for(int i = 0; i < unityPacket.hardware.size(); i++) {
+            //     TempHardwareBox tempHardwareBox = g.fromJson(
+            //         unityPacket.hardwareString.get(i), TempHardwareBox.class);
+            //     unityPacket.hardware.get(i).CopyValues(decodeHardware(tempHardwareBox));
+            // }
+            
+            robotPacket.hardwareString.clear();
+
             for(int i = 0; i < unityPacket.hardware.size(); i++) {
-                TempHardwareBox tempHardwareBox = g.fromJson(
-                    unityPacket.hardwareString.get(i), TempHardwareBox.class);
-                unityPacket.hardware.get(i).CopyValues(decodeHardware(tempHardwareBox));
+                robotPacket.hardware.get(i).copyRelValues(unityPacket.hardware.get(i));
+                String hardwareJson = g.toJson(robotPacket.hardware.get(i));
+                robotPacket.hardwareString.add(hardwareJson);
             }
 
             //Responding to unity server with data
@@ -99,6 +120,21 @@ public class ZMQServer extends Thread
             }
             case("TalonFX"): {
                 CommTalonFX tempHardware = new CommTalonFX(0);
+                tempHardware.CopyValues(tempHardwareBox);
+                return tempHardware;
+            }
+            case("TalonSRX"): {
+                CommTalonSRX tempHardware = new CommTalonSRX(0);
+                tempHardware.CopyValues(tempHardwareBox);
+                return tempHardware;
+            }
+            case("Joystick"): {
+                CommJoystick tempHardware = new CommJoystick(0);
+                tempHardware.CopyValues(tempHardwareBox);
+                return tempHardware;
+            }
+            case("AHRS"): {
+                CommAHRS tempHardware = new CommAHRS();
                 tempHardware.CopyValues(tempHardwareBox);
                 return tempHardware;
             }

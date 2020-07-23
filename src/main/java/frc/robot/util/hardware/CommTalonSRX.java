@@ -1,8 +1,8 @@
 package frc.robot.util.hardware;
 
-public class CommTalonFX extends Hardware implements Motor {
-    public CommTalonFX(int canID) {
-        type = "TalonFX";
+public class CommTalonSRX extends Hardware implements Motor {
+    public CommTalonSRX(int canID) {
+        type = "TalonSRX";
         booleans = new boolean[0];
         integers = new int[] { canID };
         doubles = new double[] { 0.0, 0.0 };
