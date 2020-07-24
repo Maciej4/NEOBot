@@ -8,6 +8,8 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 
+import java.util.HashMap;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -49,6 +51,8 @@ public class RobotTest {
     // private ArrayList<CANSparkMax> canSparkMaxList = new
     // ArrayList<CANSparkMax>();
     // private AHRS ahrsHolder;
+
+    HashMap<String, Hardware> hardwareDictionary = new HashMap<String, Hardware>();
 
     @Before
     public void setup() {
@@ -194,74 +198,24 @@ public class RobotTest {
         }).when(HardwareFactory.hardwareFactory).newJoystick_(anyInt());
     }
 
-    public Hardware findMatchingHardware(String hardwareItemType, int itemID) {
-        switch (hardwareItemType) {
-            case ("CANSparkMax"): {
-                for (int j = 0; j < zmqServer.robotPacket.hardware.size(); j++) {
-                    Hardware item = zmqServer.robotPacket.hardware.get(j);
-                    if (item.type.equals("CANSparkMax") && ((CommCANSparkMax) item).getMotorID() == itemID) {
-                        return item;
-                    }
-                }
-
-                System.out.println(ANSI_RED + "ERROR: CANSparkMax ID " + itemID
-                        + " does not match any simulated CANSparkMax ID." + ANSI_RESET);
-                return null;
-            }
-            case ("TalonFX"): {
-                for (int j = 0; j < zmqServer.robotPacket.hardware.size(); j++) {
-                    Hardware item = zmqServer.robotPacket.hardware.get(j);
-                    if (item.type.equals("TalonFX") && ((CommTalonFX) item).getMotorID() == itemID) {
-                        return item;
-                    }
-                }
-
-                System.out.println(ANSI_RED + "ERROR: TalonFX ID " + itemID
-                        + " does not match any simulated TalonFX ID." + ANSI_RESET);
-                return null;
-            }
-            case ("TalonSRX"): {
-                for (int j = 0; j < zmqServer.robotPacket.hardware.size(); j++) {
-                    Hardware item = zmqServer.robotPacket.hardware.get(j);
-                    if (item.type.equals("TalonSRX") && ((CommTalonSRX) item).getMotorID() == itemID) {
-                        return item;
-                    }
-                }
-
-                System.out.println(ANSI_RED + "ERROR: TalonSRX ID " + itemID
-                        + " does not match any simulated TalonSRX ID." + ANSI_RESET);
-                return null;
-            }
-            case ("Joystick"): {
-                for (int j = 0; j < zmqServer.robotPacket.hardware.size(); j++) {
-                    Hardware item = zmqServer.robotPacket.hardware.get(j);
-                    if (item.type.equals("Joystick") && item.integers[0] == itemID) {
-                        return item;
-                    }
-                }
-
-                System.out.println(ANSI_RED + "ERROR: Joystick ID " + itemID
-                        + " does not match any simulated Joystick ID." + ANSI_RESET);
-                return null;
-            }
-            case ("AHRS"): {
-                for (int j = 0; j < zmqServer.robotPacket.hardware.size(); j++) {
-                    Hardware item = zmqServer.robotPacket.hardware.get(j);
-                    if (item.type.equals("AHRS") && item.integers[0] == itemID) {
-                        return item;
-                    }
-                }
-
-                System.out.println(
-                        ANSI_RED + "ERROR: AHRS ID " + itemID + " does not match any simulated AHRS ID." + ANSI_RESET);
-                return null;
-            }
-            default: {
-                System.out.println(ANSI_RED + "ERROR: The class " + hardwareItemType
-                        + " is not supported by the findMatchingHardware() function." + ANSI_RESET);
-                return null;
-            }
+    public void generateDictionary() {
+        for(Hardware item : zmqServer.robotPacket.hardware) {
+            String key = item.type + item.integers[0];
+            hardwareDictionary.put(key, item);
         }
+    }
+
+    public Hardware findMatchingHardware(String hardwareItemType, int itemID) {
+        String generatedKey = hardwareItemType + itemID;
+
+        if(hardwareDictionary.containsKey(generatedKey)) {
+            return hardwareDictionary.get(generatedKey);
+        }
+
+        System.out.println(ANSI_RED + "ERROR: " + hardwareItemType + " ID " + itemID
+            + " does not match any simulated "+ hardwareItemType + " ID." + ANSI_RESET);
+
+        return null;
     }
 
     @Test
@@ -269,6 +223,7 @@ public class RobotTest {
         zmqServer = new ZMQServer();
         System.out.println("Awaiting communication from Unity (ctrl c to kill)...");
         zmqServer.awaitComms();
+        generateDictionary();
         zmqServer.start();
 
         Robot robot = new Robot();
