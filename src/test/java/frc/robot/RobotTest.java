@@ -18,8 +18,9 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.controllers.ZMQServer;
 import frc.robot.util.HardwareFactory;
 import frc.robot.util.hardware.*;
@@ -196,6 +197,48 @@ public class RobotTest {
 
             return joystick;
         }).when(HardwareFactory.hardwareFactory).newJoystick_(anyInt());
+
+        // ---------- DoubleSolenoid mocking ----------
+        doAnswer(invocation -> {
+            final DoubleSolenoid doubleSolenoid = mock(DoubleSolenoid.class);
+
+            final int forwardChannelID = invocation.getArgument(0, Integer.class).intValue();
+
+            final CommDoubleSolenoid matchedHardwareItem = (CommDoubleSolenoid) findMatchingHardware("DoubleSolenoid", forwardChannelID);
+
+            doAnswer(invocation2 -> {
+                matchedHardwareItem.setState(0);
+                return null;
+            }).when(doubleSolenoid).set(DoubleSolenoid.Value.kReverse);
+
+            doAnswer(invocation2 -> {
+                matchedHardwareItem.setState(1);
+                return null;
+            }).when(doubleSolenoid).set(DoubleSolenoid.Value.kForward);
+
+            doAnswer(invocation2 -> {
+                matchedHardwareItem.setState(2);
+                return null;
+            }).when(doubleSolenoid).set(DoubleSolenoid.Value.kOff);
+
+
+            doAnswer(invocation2 -> {
+                matchedHardwareItem.setState(0);
+                return null;
+            }).when(doubleSolenoid).set(Value.kReverse);
+
+            doAnswer(invocation2 -> {
+                matchedHardwareItem.setState(1);
+                return null;
+            }).when(doubleSolenoid).set(Value.kForward);
+
+            doAnswer(invocation2 -> {
+                matchedHardwareItem.setState(2);
+                return null;
+            }).when(doubleSolenoid).set(Value.kOff);
+
+            return doubleSolenoid;
+        }).when(HardwareFactory.hardwareFactory).newDoubleSolenoid_(anyInt(), anyInt());
     }
 
     public void generateDictionary() {
