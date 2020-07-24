@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import com.revrobotics.CANSparkMax;
@@ -92,5 +93,21 @@ public class HardwareFactory {
 
     public Joystick newJoystick_(int port) {
         return new Joystick(port);
+    }
+
+    /**
+     * Construct an instance of a DoubleSolenoid. This is used for 
+     * controlling pistons. Generally, the reverse channel is one
+     * greater than the forward channel. Example: {@code newDoubleSolenoid(0, 1);}
+     *
+     * @param forwardChannel The forward channel number on the PCM (0..7).
+     * @param reverseChannel The reverse channel number on the PCM (0..7).
+     */
+    public static DoubleSolenoid newDoubleSolenoid(int forwardChannel, int reverseChannel) {
+        return hardwareFactory.newDoubleSolenoid_(forwardChannel, reverseChannel);
+    }
+
+    public DoubleSolenoid newDoubleSolenoid_(int forwardChannel, int reverseChannel) {
+        return new DoubleSolenoid(forwardChannel, reverseChannel);
     }
 }

@@ -1,30 +1,33 @@
 package frc.robot;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.util.*;
 
 public class Robot extends TimedRobot {
   public Joystick joy = HardwareFactory.newJoystick(0);
 
-  CANSparkMax lm1 = HardwareFactory.newCANSparkMax(0, MotorType.kBrushless);
-  CANSparkMax lm2 = HardwareFactory.newCANSparkMax(1, MotorType.kBrushless);
-  CANSparkMax rm1 = HardwareFactory.newCANSparkMax(2, MotorType.kBrushless);
-  CANSparkMax rm2 = HardwareFactory.newCANSparkMax(3, MotorType.kBrushless);
-
-  public double motorPower = 0.0;
+  public TalonFX lm1 = HardwareFactory.newTalonFX(1);
+  public TalonFX lm2 = HardwareFactory.newTalonFX(2);
+  public TalonFX rm1 = HardwareFactory.newTalonFX(3);
+  public TalonFX rm2 = HardwareFactory.newTalonFX(4);
+  // AHRS gyro = HardwareFactory.newAHRS();
+  // public DoubleSolenoid piston = HardwareFactory.newDoubleSolenoid(0, 1);
 
   @Override
   public void robotInit() {
-    
+
   }
 
   @Override
   public void robotPeriodic() {
-    
+
   }
 
   @Override
@@ -34,12 +37,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    
+
   }
 
   @Override
   public void teleopInit() {
-    
+    // System.out.println("");
   }
 
   @Override
@@ -47,9 +50,17 @@ public class Robot extends TimedRobot {
     double leftPower = -joy.getRawAxis(0) + joy.getRawAxis(1);
     double rightPower = -joy.getRawAxis(0) - joy.getRawAxis(1);
 
-    lm1.set(leftPower);
-    lm2.set(leftPower);
-    rm1.set(rightPower);
-    rm2.set(rightPower);
+    // System.out.println(gyro.getAngle());
+
+    // if(joy.getRawButton(1)) {
+    //   piston.set(Value.kForward);
+    // } else {
+    //   piston.set(Value.kReverse);
+    // }
+
+    lm1.set(ControlMode.PercentOutput, leftPower);
+    lm2.set(ControlMode.PercentOutput, leftPower);
+    rm1.set(ControlMode.PercentOutput, rightPower);
+    rm2.set(ControlMode.PercentOutput, rightPower);
   }
 }
