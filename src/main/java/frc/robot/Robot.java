@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+// import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.util.*;
@@ -16,6 +17,7 @@ public class Robot extends TimedRobot {
   TalonFX rm1 = HardwareFactory.newTalonFX(3);
   TalonFX rm2 = HardwareFactory.newTalonFX(4);
   AHRS gyro = HardwareFactory.newAHRS();
+  // DoubleSolenoid test = new DoubleSolenoid(0, 1);
 
   public double motorPower = 0.0;
 
@@ -49,7 +51,7 @@ public class Robot extends TimedRobot {
     double leftPower = -joy.getRawAxis(0) + joy.getRawAxis(1);
     double rightPower = -joy.getRawAxis(0) - joy.getRawAxis(1);
 
-    System.out.println(gyro.getAngle());
+    // System.out.println(gyro.getAngle());
 
     lm1.set(ControlMode.PercentOutput, leftPower);
     lm2.set(ControlMode.PercentOutput, leftPower);
