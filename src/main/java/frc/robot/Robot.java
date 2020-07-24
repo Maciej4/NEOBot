@@ -13,14 +13,12 @@ import frc.robot.util.*;
 public class Robot extends TimedRobot {
   public Joystick joy = HardwareFactory.newJoystick(0);
 
-  TalonFX lm1 = HardwareFactory.newTalonFX(1);
-  TalonFX lm2 = HardwareFactory.newTalonFX(2);
-  TalonFX rm1 = HardwareFactory.newTalonFX(3);
-  TalonFX rm2 = HardwareFactory.newTalonFX(4);
+  public TalonFX lm1 = HardwareFactory.newTalonFX(1);
+  public TalonFX lm2 = HardwareFactory.newTalonFX(2);
+  public TalonFX rm1 = HardwareFactory.newTalonFX(3);
+  public TalonFX rm2 = HardwareFactory.newTalonFX(4);
   // AHRS gyro = HardwareFactory.newAHRS();
-  // DoubleSolenoid piston = HardwareFactory.newDoubleSolenoid(0, 1);
-
-  public double motorPower = 0.0;
+  // public DoubleSolenoid piston = HardwareFactory.newDoubleSolenoid(0, 1);
 
   @Override
   public void robotInit() {
