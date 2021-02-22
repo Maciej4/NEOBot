@@ -25,10 +25,10 @@ public class Robot extends TimedRobot {
   // Right side : 1, 2
   // Left side  : 3, 4
 
-  public TalonFX lm1 = HardwareFactory.newTalonFX(1);
-  public TalonFX lm2 = HardwareFactory.newTalonFX(2);
-  public TalonFX rm1 = HardwareFactory.newTalonFX(3);
-  public TalonFX rm2 = HardwareFactory.newTalonFX(4);
+  public TalonFX rm1 = HardwareFactory.newTalonFX(1);
+  public TalonFX rm2 = HardwareFactory.newTalonFX(2);
+  public TalonFX lm1 = HardwareFactory.newTalonFX(3);
+  public TalonFX lm2 = HardwareFactory.newTalonFX(4);
 
   @Override
   public void robotInit() {
