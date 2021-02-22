@@ -2,6 +2,7 @@ package frc.robot;
 
 import org.junit.*;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -263,6 +264,7 @@ public class RobotTest {
 
     @Test
     public void simulateRobot() {
+        System.out.println(1);
         zmqServer = new ZMQServer();
         System.out.println("Awaiting communication from Unity (ctrl c to kill)...");
         zmqServer.awaitComms();
@@ -378,5 +380,10 @@ public class RobotTest {
         zmqServer.interrupt();
         System.out.println("Finishing up...");
         robot.close();
+
+        //Guaranteed failure statement
+        int A = 0;
+        int B = 1;
+        assertEquals(A, B);
     }
 }
